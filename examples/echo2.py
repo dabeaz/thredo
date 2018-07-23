@@ -1,7 +1,7 @@
 # Simple echo server benchmark
 
-from threadio.socket import *
-import threadio
+from thredo.socket import *
+import thredo
 
 def echo_handler(client, addr):
     print('Connection from', addr)
@@ -17,7 +17,7 @@ def echo_handler(client, addr):
         client.close()
 
 def killer(delay, t):
-    threadio.sleep(delay)
+    thredo.sleep(delay)
     t.cancel()
 
 def echo_server(host, port):
@@ -27,9 +27,9 @@ def echo_server(host, port):
     sock.listen(5)
     while True:
         client, addr = sock.accept()
-        t = threadio.spawn(echo_handler, client, addr, daemon=True)
-        threadio.spawn(killer, 30, t)
+        t = thredo.spawn(echo_handler, client, addr, daemon=True)
+        thredo.spawn(killer, 30, t)
         
-threadio.run(echo_server, '', 25000)
+thredo.run(echo_server, '', 25000)
 
     

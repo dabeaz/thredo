@@ -1,4 +1,4 @@
-import threadio
+import thredo
 
 def consumer(q):
     while True:
@@ -6,7 +6,7 @@ def consumer(q):
         if item is None:
             break
         print("Child:", item)
-        threadio.sleep(0.01)
+        thredo.sleep(0.01)
         
 
 def producer(q, count):
@@ -16,12 +16,12 @@ def producer(q, count):
     q.put(None)
 
 def main():
-    q = threadio.Queue(maxsize=1)
-    t1 = threadio.spawn(consumer, q)
-    t2 = threadio.spawn(producer, q, 1000)
+    q = thredo.Queue(maxsize=1)
+    t1 = thredo.spawn(consumer, q)
+    t2 = thredo.spawn(producer, q, 1000)
     t1.join()
     t2.join()
 
-threadio.run(main)
+thredo.run(main)
 
 

@@ -1,7 +1,7 @@
 # happy.py
 # An implementation of RFC 6555 (Happy Eyeballs)
 
-from threadio import socket, ThreadGroup, spawn, ignore_after, run
+from thredo import socket, ThreadGroup, spawn, ignore_after, run
 import itertools
 
 def open_tcp_stream(hostname, port, happy_eyeballs_delay=0.3):
