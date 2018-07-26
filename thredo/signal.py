@@ -5,6 +5,7 @@
 __all__ = ['SignalEvent']
 
 # -- Standard Library
+import curio
 from curio.thread import TAWAIT as AWAIT
 
 class SignalEvent:

@@ -211,6 +211,13 @@ class Socket(object):
         if self._socket:
             self._socket.shutdown(how)
 
+    def __enter__(self):
+        self._socket.__enter__()
+        return self
+
+    def __exit__(self, *args):
+        self._socket.__exit__(*args)
+
 
 
 MAX_READ = 65536

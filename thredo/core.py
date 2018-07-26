@@ -56,6 +56,9 @@ class ThreadGroup:
         return self._tg.completed
 
 
+import logging
+logging.getLogger('curio').level = logging.CRITICAL
+
 def run(callable, *args):
     async def _runner():
         t = await curio.spawn(curio.thread.thread_handler)
