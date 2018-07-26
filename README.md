@@ -90,7 +90,7 @@ here's a more advanced version of the above code::
 
     thredo.run(main)
 
-== Examples
+## Examples
 
 The ``examples`` directory contains more examples of using ``thredo``. 
 The ``examples/euro`` directory contains coding samples from the
