@@ -2,6 +2,9 @@
 
 Thredo is threads on async.  For the brave. Or the foolish. Only time will tell.
 
+Note: Thredo requires the most up-to-date version of Curio--meaning the one
+that is checked out of the Curio GitHub repository at https://github.com/dabeaz/curio.
+
 ## High Level Overview (The Big Idea)
 
 Consider the following thread program involving a worker, a producer,
