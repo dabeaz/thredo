@@ -99,6 +99,22 @@ The ``examples`` directory contains more examples of using ``thredo``.
 The ``examples/euro`` directory contains coding samples from the
 EuroPython 2018 talk.
 
+## FAQ
+
+**Q: Is this going to turn into a full-fledged project?**
+
+A: It's too early to say.
+
+**Q: Isn't this sort of like using concurrent.futures?**
+
+A: No. concurrent.futures provides no mechanism for controlling threads and no mechanism for
+cancelling threads.  Although it might appear like this is so, given that you can seemingly
+"cancel" a Future, this has no effect on thread execution. Once started, worked submitted to a
+thread pool in concurrent.futures runs to completion regardless of whether or not the associated Future
+is cancelled. Cancelling a future really only causes it to be abandoned if it hasn't yet started.
+If you cancel a thread in thredo, it is cleanly cancelled at the next blocking operation.
 
 
+
+ 
 
