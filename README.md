@@ -8,30 +8,32 @@ that is checked out of the Curio GitHub repository at https://github.com/dabeaz/
 ## High Level Overview (The Big Idea)
 
 Consider the following thread program involving a worker, a producer,
-and queue::
+and queue:
 
-    import threading
-    import queue
-    import time
+```python
+import threading
+import queue
+import time
 
-    def worker(q):
-        while True:
-            item = q.get()
-            if item is None:
-                break
-            print('Got:', item)
+def worker(q):
+    while True:
+        item = q.get()
+        if item is None:
+            break
+        print('Got:', item)
 
-    def main():
-        q = queue.Queue()
-        t = threading.Thread(target=worker, args=(q,))
-        t.start()
-        for n in range(10):
-            q.put(n)
-            time.sleep(1)
-        q.put(None)
-        t.join()
+def main():
+    q = queue.Queue()
+    t = threading.Thread(target=worker, args=(q,))
+    t.start()
+    for n in range(10):
+        q.put(n)
+        time.sleep(1)
+    q.put(None)
+    t.join()
 
-    main()
+main()
+```
 
 In this code, there are blocking operations such as ``q.get()`` and
 ``time.sleep()``.  This blocking is ultimately handled by the
@@ -44,54 +46,58 @@ Thredo re-envisions threads by redirecting all blocking operations to
 an async library.  The code looks mostly the same except that you use 
 the `thredo` module. For example:
 
-    import thredo
+```python
+import thredo
 
-    def worker(q):
-        while True:
-            item = q.get()
-            if item is None:
-                break
-            print('Got:', item)
+def worker(q):
+    while True:
+        item = q.get()
+        if item is None:
+            break
+        print('Got:', item)
 
-    def main():
-        q = thredo.Queue()
-        t = thredo.spawn(worker, q)
-        for n in range(10):
-            q.put(n)
-            thredo.sleep(1)
-        q.put(None)
-        t.join()
+def main():
+    q = thredo.Queue()
+    t = thredo.spawn(worker, q)
+    for n in range(10):
+        q.put(n)
+        thredo.sleep(1)
+    q.put(None)
+    t.join()
 
-    thredo.run(main)
+thredo.run(main)
+```
 
 The main reason you'd use ``thredo`` however is that it gives you extra
 features such as thread groups, cancellation, and more.   For example,
-here's a more advanced version of the above code::
+here's a more advanced version of the above code:
 
-    import thredo
+```python
+import thredo
 
-    def worker(q):
-        try:
-            while True:
-                item = q.get()
-                print('Got:', item)
-                q.task_done()
-        except thredo.ThreadCancelled:
-            print('Worker cancelled')
+def worker(q):
+    try:
+        while True:
+            item = q.get()
+            print('Got:', item)
+            q.task_done()
+    except thredo.ThreadCancelled:
+        print('Worker cancelled')
 
-    def main():
-        q = thredo.Queue()
-        with thredo.ThreadGroup(wait=None) as workers:
-            for n in range(4):
-                workers.spawn(worker, q)
+def main():
+    q = thredo.Queue()
+    with thredo.ThreadGroup(wait=None) as workers:
+        for n in range(4):
+            workers.spawn(worker, q)
 
-            for n in range(10):
-                q.put(n)
-                thredo.sleep(1)
+        for n in range(10):
+            q.put(n)
+            thredo.sleep(1)
 
-            workers.join()    
+        workers.join()    
 
-    thredo.run(main)
+thredo.run(main)
+```
 
 ## Examples
 
