@@ -89,7 +89,7 @@ here's a more advanced version of the above code::
                 q.put(n)
                 thredo.sleep(1)
 
-            workers.join()    
+            q.join()    
 
     thredo.run(main)
 
@@ -113,6 +113,17 @@ cancelling threads.  Although it might appear like this is so, given that you ca
 thread pool in concurrent.futures runs to completion regardless of whether or not the associated Future
 is cancelled. Cancelling a future really only causes it to be abandoned if it hasn't yet started.
 If you cancel a thread in thredo, it is cleanly cancelled at the next blocking operation.
+
+**Q: Are Thredo Threads real Threads?**
+
+A: Yes. All threads are created using ``threading.Thread``. They run
+concurrently according to the same rules as normal threads and can use
+all of the objects normally associated with threads (including
+synchronization primitives in ``threading``).  If you want to use
+things like thread-cancellation however, you need to make sure you use
+various objects provided in the ``thredo`` module.  For example,
+waiting on a ``thredo.Lock`` can be cancelled whereas waiting on a
+``threading.Lock`` can not.
 
 
 
