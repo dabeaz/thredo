@@ -4,9 +4,10 @@
 
 __all__ = ['SignalEvent']
 
-# -- Standard Library
 import curio
-from curio.thread import TAWAIT as AWAIT
+
+# -- Thredo
+from .thr import TAWAIT as AWAIT
 
 class SignalEvent:
     def __init__(self, *args, **kwargs):

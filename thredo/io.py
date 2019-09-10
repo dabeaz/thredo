@@ -12,9 +12,11 @@ import os
 # -- Curio
 
 from curio.traps import _read_wait, _write_wait
-from curio.thread import TAWAIT as AWAIT
 from curio.io import _Fd, WantRead, WantWrite
 import curio.errors
+
+# -- Thredo
+from .thr import TAWAIT as AWAIT
 
 # This socket class mirrors the functionality in the Curio socket
 # class.  An important facet of the design is that it still relies

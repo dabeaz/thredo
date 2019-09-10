@@ -5,7 +5,9 @@
 __all__ = [ 'Queue' ]
 
 import curio
-from curio.thread import TAWAIT as AWAIT
+
+# -- Thredo
+from .thr import TAWAIT as AWAIT
 
 class Queue(object):
     def __init__(self, maxsize=0):

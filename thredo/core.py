@@ -5,7 +5,8 @@ __all__ = ['run', 'sleep', 'spawn', 'timeout_after', 'ignore_after',
            'ThreadError', 'ThreadGroup']
 
 import curio
-AWAIT = curio.thread.TAWAIT
+from .thr import TAWAIT as AWAIT
+from . import thr
 
 class Thread:
     def __init__(self, atask):
@@ -57,7 +58,7 @@ class ThreadGroup:
 
 def run(callable, *args):
     async def _runner():
-        t = await curio.spawn(curio.thread.thread_handler)
+        t = await curio.spawn(thr.thread_handler)
         try:
             async with curio.spawn_thread():
                 return callable(*args)
@@ -66,7 +67,7 @@ def run(callable, *args):
     return curio.run(_runner)
 
 def enable():
-    curio.thread.enable_async()
+    thr.enable_async()
 
 def sleep(seconds):
     return AWAIT(curio.sleep, seconds)
@@ -76,7 +77,7 @@ def spawn(callable, *args, daemon=False):
     return Thread(atask)
 
 def timeout_after(delay, callable=None, *args):
-    curio.thread.enable_async()
+    thr.enable_async()
     if callable:
         with curio.timeout_after(delay):
             return callable(*args)
@@ -84,7 +85,7 @@ def timeout_after(delay, callable=None, *args):
         return curio.timeout_after(delay)
 
 def ignore_after(delay, callable=None, *args):
-    curio.thread.enable_async()
+    thr.enable_async()
     if callable:
         with curio.ignore_after(delay):
             return callable(*args)

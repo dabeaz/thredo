@@ -5,7 +5,9 @@
 __all__ = [ 'Event', 'Lock', 'RLock', 'Semaphore', 'BoundedSemaphore', 'Condition' ]
 
 import curio
-from curio.thread import TAWAIT as AWAIT
+
+# -- Thredo
+from .thr import TAWAIT as AWAIT
 
 class Event(object):
     def __init__(self):
