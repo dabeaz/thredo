@@ -1,5 +1,15 @@
 # thredo
 
+## Thredo is Dead
+
+Thread was a research topic related to the mixing of threads and
+async. I spoke about it at EuroPython 2018
+(https://www.youtube.com/watch?v=U66KuyD3T0M).  However, due to a lack
+of time and outside interest, the project has been abandoned.  Feel free to
+look around however.  -- Dave
+
+## Introduction
+
 Thredo is threads on async.  For the brave. Or the foolish. Only time will tell.
 
 Note: Thredo requires the most up-to-date version of Curio--meaning the one
